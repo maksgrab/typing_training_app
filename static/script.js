@@ -1,5 +1,7 @@
 class TypingTest {
     constructor() {
+        this.totalCharsTyped = 0;
+        this.totalErrors = 0;
         this.textContent = '';
         this.currentIndex = 0;
         this.errors = 0;
@@ -73,6 +75,22 @@ class TypingTest {
         const inputValue = e.target.value;
         const inputLength = inputValue.length;
         
+
+        const prevLength = this.currentIndex;
+        
+        // Track added characters
+        if (inputValue.length > prevLength) {
+            const addedChars = inputValue.length - prevLength;
+            this.totalCharsTyped += addedChars;
+            
+            // Check each new character for errors
+            for (let i = prevLength; i < inputValue.length; i++) {
+                if (inputValue[i] !== this.textContent[i]) {
+                    this.totalErrors++;
+                }
+            }
+        }
+
         // Prevent typing beyond the text length
         if (inputLength > this.textContent.length) {
             e.target.value = inputValue.slice(0, this.textContent.length);
@@ -124,20 +142,24 @@ class TypingTest {
     }
     
     updateStats() {
-        this.charCount.textContent = this.currentIndex;
-        this.errorCount.textContent = this.errors;
+        this.charCount.textContent = this.totalCharsTyped;
+
+        // Update accuracy calculation
+        const accuracy = this.totalCharsTyped === 0 ? 100 :
+            Math.round(((this.totalCharsTyped - this.totalErrors) / this.totalCharsTyped) * 100);
         
-        const accuracy = this.currentIndex === 0 ? 100 : 
-            Math.round((this.correctChars / this.currentIndex) * 100);
         this.accuracy.textContent = `${accuracy}%`;
+        this.errorCount.textContent = this.totalErrors;
     }
-    
+
     completeTest() {
-        const finalAccuracy = Math.round((this.correctChars / this.textContent.length) * 100);
-        alert(`Test Complete!\nAccuracy: ${finalAccuracy}%\nErrors: ${this.errors}`);
+        // const finalAccuracy = Math.round((this.correctChars / this.textContent.length) * 100);
+        alert(`Test Complete!\nAccuracy: ${this.accuracy.textContent}\nErrors: ${this.totalErrors}`);
     }
     
     resetTest() {
+        this.totalCharsTyped = 0;
+        this.totalErrors = 0;
         this.currentIndex = 0;
         this.errors = 0;
         this.correctChars = 0;
