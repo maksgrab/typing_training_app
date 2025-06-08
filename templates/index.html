@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Test App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Typing Speed Test</h1>
+        </header>
+        
+        <main>
+            <div class="text-display" id="text-display">
+                <p id="text-content">Loading text...</p>
+            </div>
+            
+            <div class="input-section">
+                <textarea 
+                    id="typing-input" 
+                    placeholder="Start typing here..."
+                    autofocus
+                ></textarea>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <span class="label">Characters:</span>
+                    <span id="char-count">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Errors:</span>
+                    <span id="error-count">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Accuracy:</span>
+                    <span id="accuracy">100%</span>
+                </div>
+            </div>
+            
+            <button id="reset-btn">Reset Test</button>
+        </main>
+    </div>
+    
+    <script src="/static/script.js"></script>
+</body>
+</html>
